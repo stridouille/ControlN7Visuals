@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
@@ -40,8 +41,12 @@ public class CameraController : MonoBehaviour
              speed * Time.deltaTime);
         }
 
+        if (Input.GetKey("y")){
+            ScreenCapture.CaptureScreenshot(Application.dataPath + "/Screenshot.png");
+        }
+
         // Camera rotation.
-        if(Input.GetMouseButton(0))
+        if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButton(0))
         {
              
             transform.eulerAngles += mouseSpeed * new Vector3( -Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"),0) ; 

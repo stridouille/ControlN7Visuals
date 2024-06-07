@@ -3,7 +3,7 @@ Shader "Custom/TransparentEquirectangular"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        decreaseAlpha ("Decrease Alpha", Range(0, 1)) = 0.2
+        _decreaseAlpha ("Decrease Alpha", Range(0, 1)) = 0.2
     }
     SubShader
     {
@@ -36,7 +36,7 @@ Shader "Custom/TransparentEquirectangular"
                     float     decreaseAlpha: TEXCOORD1;
                 };
 
-                float decreaseAlpha;
+                float _decreaseAlpha;
 
                 v2f vert (appdata v)
                 {
@@ -45,7 +45,7 @@ Shader "Custom/TransparentEquirectangular"
                     o.normal = v.normal;
                     o.decreaseAlpha = 1.0;
                     if (dot(v.normal, ObjSpaceViewDir(v.vertex)) < 0.0) {
-                        o.decreaseAlpha = decreaseAlpha;
+                        o.decreaseAlpha = _decreaseAlpha;
                     }
                     return o;
                 }
