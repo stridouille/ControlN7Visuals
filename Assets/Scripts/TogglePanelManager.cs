@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TogglePanelManager : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class TogglePanelManager : MonoBehaviour
         GameObject newToggle = Instantiate(togglePrefab);
         newToggle.transform.SetParent(gameObject.transform);
         newToggle.transform.SetAsFirstSibling();
-        newToggle.transform.Find("Label").GetComponent<Text>().text = newSphere.name;
+        newToggle.GetComponentInChildren<TMP_InputField>().text = newSphere.name;
 
         // Add a listener to the toggle
         Toggle toggleComponent = newToggle.GetComponent<Toggle>();
