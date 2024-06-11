@@ -28,7 +28,7 @@ public class AddSinglePlotScript : MonoBehaviour, IPointerDownHandler
 
         // Called from browser
         public void OnFileUpload(string url) {
-            StartCoroutine(OutputRoutine(url));
+            StartCoroutine(OutputRoutine(urls.Split(',')));
         }
     #else
         //
@@ -42,27 +42,31 @@ public class AddSinglePlotScript : MonoBehaviour, IPointerDownHandler
         }
 
         private void OnClick() {
-            var paths = StandaloneFileBrowser.OpenFilePanel("Title", "", "png", false);
-            if (paths.Length > 0) {
-                StartCoroutine(NewPlotRoutine(new System.Uri(paths[0]).AbsoluteUri));
+            var paths = StandaloneFileBrowser.OpenFilePanel("Title", "", "png", true);
+            var urlArr = new List<string>(paths.Length);
+            for (int i = 0; i < paths.Length; i++) {
+                urlArr.Add(new System.Uri(paths[i]).AbsoluteUri);
             }
+            StartCoroutine(NewPlotRoutine(urlArr.ToArray()));
         }
     #endif
 
-        private IEnumerator NewPlotRoutine(string url) {
-            using (UnityWebRequest loader = UnityWebRequestTexture.GetTexture(url)) {
-                yield return loader.SendWebRequest();
-                if (loader.result == UnityWebRequest.Result.Success) {
+        private IEnumerator NewPlotRoutine(string[] urlArr) {
+            for (int i = 0; i < urlArr.Length; i++) {
+                using (UnityWebRequest loader = UnityWebRequestTexture.GetTexture(urlArr[i])) {
+                    yield return loader.SendWebRequest();
+                    if (loader.result == UnityWebRequest.Result.Success) {
 
-                    GameObject newSphere = _spheres.GetComponent<SpheresManager>().addSphere(DownloadHandlerTexture.GetContent(loader), url);
+                        GameObject newSphere = _spheres.GetComponent<SpheresManager>().addSphere(DownloadHandlerTexture.GetContent(loader), urlArr[i]);
 
-                    //create sphere with selected texture and attach it to PlotSpheres
-                    Texture2D newTex = DownloadHandlerTexture.GetContent(loader);
-                    
+                        //create sphere with selected texture and attach it to PlotSpheres
+                        Texture2D newTex = DownloadHandlerTexture.GetContent(loader);
+                        
 
-                    //create toggle that sets active the sphere and attach it to TogglePanel
-                    _togglePanel.GetComponent<TogglePanelManager>().addToggle(newSphere);
+                        //create toggle that sets active the sphere and attach it to TogglePanel
+                        _togglePanel.GetComponent<TogglePanelManager>().addToggle(newSphere);
 
+                    }
                 }
             }
         }
