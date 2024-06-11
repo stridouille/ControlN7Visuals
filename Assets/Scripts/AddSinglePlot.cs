@@ -10,8 +10,10 @@ using UnityEngine.Networking;
 public class AddSinglePlotScript : MonoBehaviour, IPointerDownHandler
 
 {
+    
+    [SerializeField] private GameObject _spheres;
+    [SerializeField] private GameObject _togglePanel;
 
-    public Texture2D output;
 
     #if UNITY_WEBGL && !UNITY_EDITOR
         //
@@ -42,16 +44,25 @@ public class AddSinglePlotScript : MonoBehaviour, IPointerDownHandler
         private void OnClick() {
             var paths = StandaloneFileBrowser.OpenFilePanel("Title", "", "png", false);
             if (paths.Length > 0) {
-                StartCoroutine(OutputRoutine(new System.Uri(paths[0]).AbsoluteUri));
+                StartCoroutine(NewPlotRoutine(new System.Uri(paths[0]).AbsoluteUri));
             }
         }
     #endif
 
-        private IEnumerator OutputRoutine(string url) {
+        private IEnumerator NewPlotRoutine(string url) {
             using (UnityWebRequest loader = UnityWebRequestTexture.GetTexture(url)) {
                 yield return loader.SendWebRequest();
                 if (loader.result == UnityWebRequest.Result.Success) {
-                    output = DownloadHandlerTexture.GetContent(loader);
+
+                    GameObject newSphere = _spheres.GetComponent<SpheresManager>().addSphere(DownloadHandlerTexture.GetContent(loader), url);
+
+                    //create sphere with selected texture and attach it to PlotSpheres
+                    Texture2D newTex = DownloadHandlerTexture.GetContent(loader);
+                    
+
+                    //create toggle that sets active the sphere and attach it to TogglePanel
+                    _togglePanel.GetComponent<TogglePanelManager>().addToggle(newSphere);
+
                 }
             }
         }
