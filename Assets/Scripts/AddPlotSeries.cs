@@ -5,9 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using SFB;
 using UnityEngine.Networking;
+using UnityEditor;
+using System.Linq;
 
 [RequireComponent(typeof(Button))]
-public class AddSinglePlotScript : MonoBehaviour, IPointerDownHandler
+public class AddPlotSeries : MonoBehaviour, IPointerDownHandler
 
 {
     
@@ -52,21 +54,25 @@ public class AddSinglePlotScript : MonoBehaviour, IPointerDownHandler
     #endif
 
         private IEnumerator NewPlotRoutine(string[] urlArr) {
+            List<Texture2D> textures = new List<Texture2D>();
             for (int i = 0; i < urlArr.Length; i++) {
                 using (UnityWebRequest loader = UnityWebRequestTexture.GetTexture(urlArr[i])) {
                     yield return loader.SendWebRequest();
                     if (loader.result == UnityWebRequest.Result.Success) {
-                        //create selected texture
-                        Texture2D newTex = DownloadHandlerTexture.GetContent(loader);
-                        
-                        //add sphere to the scene
-                        GameObject newSphere = _spheres.GetComponent<SpheresManager>().addSphere(newTex, urlArr[i]);
 
-                        //create toggle that sets active the sphere and attach it to TogglePanel
-                        _togglePanel.GetComponent<TogglePanelManager>().addToggle(newSphere);
+                        //create selected texture and add to the list
+                        Texture2D newTex = DownloadHandlerTexture.GetContent(loader);
+                        textures.Add(newTex);
 
                     }
                 }
+            }
+            if (urlArr.Length > 0) {
+                //add sphere to the scene and set up animation manager
+                GameObject newSphere = _spheres.GetComponent<SpheresManager>().addSphere(textures.First(), "Plot Series");
+                newSphere.AddComponent<SphereAnimationManager>();
+                newSphere.GetComponent<SphereAnimationManager>().textures = textures;
+                _togglePanel.GetComponent<TogglePanelManager>().addSeriesToggle(newSphere, textures);
             }
         }
 }
