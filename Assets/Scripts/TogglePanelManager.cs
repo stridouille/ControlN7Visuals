@@ -23,6 +23,14 @@ public class TogglePanelManager : MonoBehaviour
         {
             newSphere.SetActive(value);
         });
+
+        // Add a listener to the delete button
+        GameObject deleteButton = newToggle.transform.Find("Delete").gameObject;
+        deleteButton.GetComponentInChildren<Button>().onClick.AddListener(() =>
+        {
+            Destroy(newSphere);
+            Destroy(newToggle);
+        });
     }   
 
     public void addSeriesToggle(GameObject newSphere, List<Texture2D> textures) {
@@ -60,6 +68,14 @@ public class TogglePanelManager : MonoBehaviour
         backwardButton.GetComponentInChildren<Button>().onClick.AddListener(() =>
         {
             newSphere.GetComponent<SphereAnimationManager>().previousTexture();
+        });
+
+        // Add a listener to the delete button
+        GameObject deleteButton = newToggle.transform.Find("Delete").gameObject;
+        deleteButton.GetComponentInChildren<Button>().onClick.AddListener(() =>
+        {
+            Destroy(newSphere);
+            Destroy(newToggle);
         });
     }
 }
