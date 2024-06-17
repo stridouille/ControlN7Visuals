@@ -4,6 +4,7 @@ Shader "Custom/TransparentEquirectangular"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _decreaseAlpha ("Decrease Alpha", Range(0, 1)) = 0.2
+        _Color ("Color", Color) = (1,1,1,1)
     }
     SubShader
     {
@@ -53,6 +54,7 @@ Shader "Custom/TransparentEquirectangular"
                 sampler2D _MainTex;
                 float4 _MainTex_ST;
                 #define PI 3.141592653589793
+                float4 _Color;
 
                 inline float2 RadialCoords(float3 a_coords)
                 {
@@ -77,6 +79,7 @@ Shader "Custom/TransparentEquirectangular"
                     equiUV.x += _MainTex_ST.z;     
 
                     fixed4 col = tex2Dgrad(_MainTex, equiUV, dx, dy) * float4(1, 1, 1, IN.decreaseAlpha);
+                    col = (1, 1, 1, col.a) * _Color;
                     return col;
                 }
 

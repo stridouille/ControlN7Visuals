@@ -7,6 +7,7 @@ using SFB;
 using UnityEngine.Networking;
 using UnityEditor;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 [RequireComponent(typeof(Button))]
 public class AddPlotSeries : MonoBehaviour, IPointerDownHandler
@@ -25,12 +26,12 @@ public class AddPlotSeries : MonoBehaviour, IPointerDownHandler
         private static extern void UploadFile(string gameObjectName, string methodName, string filter, bool multiple);
 
         public void OnPointerDown(PointerEventData eventData) {
-            UploadFile(gameObject.name, "OnFileUpload", ".png", false);
+            UploadFile(gameObject.name, "OnFileUpload", ".png", true);
         }
 
         // Called from browser
         public void OnFileUpload(string url) {
-            StartCoroutine(OutputRoutine(urls.Split(',')));
+            StartCoroutine(NewPlotRoutine(url.Split(',')));
         }
     #else
         //
@@ -72,7 +73,7 @@ public class AddPlotSeries : MonoBehaviour, IPointerDownHandler
                 GameObject newSphere = _spheres.GetComponent<SpheresManager>().addSphere(textures.First(), "Plot Series");
                 newSphere.AddComponent<SphereAnimationManager>();
                 newSphere.GetComponent<SphereAnimationManager>().textures = textures;
-                _togglePanel.GetComponent<TogglePanelManager>().addSeriesToggle(newSphere, textures);
+                _togglePanel.GetComponent<TogglePanelManager>().addToggleSeries(newSphere, textures);
             }
         }
 }

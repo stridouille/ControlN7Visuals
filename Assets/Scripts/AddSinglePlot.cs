@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using SFB;
 using UnityEngine.Networking;
+using System.Runtime.InteropServices;
 
 [RequireComponent(typeof(Button))]
 public class AddSinglePlotScript : MonoBehaviour, IPointerDownHandler
@@ -23,12 +24,12 @@ public class AddSinglePlotScript : MonoBehaviour, IPointerDownHandler
         private static extern void UploadFile(string gameObjectName, string methodName, string filter, bool multiple);
 
         public void OnPointerDown(PointerEventData eventData) {
-            UploadFile(gameObject.name, "OnFileUpload", ".png", false);
+            UploadFile(gameObject.name, "OnFileUpload", ".png", true);
         }
 
         // Called from browser
         public void OnFileUpload(string url) {
-            StartCoroutine(OutputRoutine(urls.Split(',')));
+            StartCoroutine(NewPlotRoutine(url.Split(',')));
         }
     #else
         //
@@ -60,7 +61,7 @@ public class AddSinglePlotScript : MonoBehaviour, IPointerDownHandler
                         Texture2D newTex = DownloadHandlerTexture.GetContent(loader);
                         
                         //add sphere to the scene
-                        GameObject newSphere = _spheres.GetComponent<SpheresManager>().addSphere(newTex, urlArr[i]);
+                        GameObject newSphere = _spheres.GetComponent<SpheresManager>().addSphere(newTex, "Plot");
 
                         //create toggle that sets active the sphere and attach it to TogglePanel
                         _togglePanel.GetComponent<TogglePanelManager>().addToggle(newSphere);
