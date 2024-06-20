@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,12 +20,34 @@ public abstract class SphereToggle : MonoBehaviour
 
     public void applyColor(Color color) {
         this.color = color;
-        sphere.GetComponent<Renderer>().material.SetColor("_Color", color);
+        #if UNITY_EDITOR
+            Renderer rend = sphere.GetComponent<Renderer>();
+            Material tmpMaterial = new Material(rend.sharedMaterial);
+            tmpMaterial.SetColor("_Color", color);
+            rend.sharedMaterial = tmpMaterial;
+        #else
+            sphere.GetComponent<Renderer>().material.SetColor("_Color", color);
+        #endif
         gameObject.transform.Find("ColorPicker").gameObject.GetComponent<Image>().color = color;
     }
 
     public void applyPickedColor(GameObject colorPicker) {
         applyColor(colorPicker.GetComponent<FlexibleColorPicker>().GetColor());
+    }
+
+    public void modifyName(string newName) {
+        sphere.name = newName;
+        gameObject.name = "Toggle " + newName;
+        gameObject.GetComponentInChildren<TMP_InputField>().text = newName;
+    }
+
+    public string getSphereName() {
+        return sphere.name;
+    }
+
+    public void destroySphere() {
+        DestroyImmediate(sphere);
+        DestroyImmediate(gameObject);
     }
     
 }

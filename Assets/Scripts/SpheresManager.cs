@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using SFB;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -9,7 +10,7 @@ public class SpheresManager : MonoBehaviour
 {
     [SerializeField] private Shader _shader;
     [SerializeField] private GameObject _togglePanel;
-    private int nextColorNum = 1;
+    private int plotNum = 1;
 
 
     public void editorAddPlots() {
@@ -30,14 +31,15 @@ public class SpheresManager : MonoBehaviour
                     Texture2D newTex = DownloadHandlerTexture.GetContent(loader);
                     
                     //generate new color for the new plot
-                    Color newColor = Color.HSVToRGB(getColorRate(nextColorNum), 1, 1);
-                    nextColorNum++;
+                    Color newColor = Color.HSVToRGB(getColorRate(plotNum), 1, 1);
 
                     //add sphere to the scene
-                    GameObject newSphere = addSphere(newTex, "Plot", newColor);
+                    string name = System.IO.Path.GetFileNameWithoutExtension(urlArr[i]);
+                    GameObject newSphere = addSphere(newTex, name, newColor);
                     
                     //create toggle that sets active the sphere and attach it to TogglePanel
                     _togglePanel.GetComponent<TogglePanelManager>().addToggle(newSphere, newColor, false);
+                    plotNum++;
                 }
             }
         }
@@ -68,11 +70,12 @@ public class SpheresManager : MonoBehaviour
             }
             if (urlArr.Length > 0) {
                 //generate new color for the new plot
-                Color newColor = Color.HSVToRGB(getColorRate(nextColorNum), 1, 1);
-                nextColorNum++;
+                Color newColor = Color.HSVToRGB(getColorRate(plotNum), 1, 1);
+                plotNum++;
 
                 //add sphere to the scene and set up animation manager
-                GameObject newSphere = addSphere(textures.First(), "Plot Series", newColor);
+                string name = System.IO.Path.GetFileNameWithoutExtension(urlArr[0]);
+                GameObject newSphere = addSphere(textures.First(), name, newColor);
                 newSphere.AddComponent<SphereAnimationManager>();
                 newSphere.GetComponent<SphereAnimationManager>().textures = textures;
                 _togglePanel.GetComponent<TogglePanelManager>().addToggle(newSphere, newColor, true);
@@ -82,7 +85,7 @@ public class SpheresManager : MonoBehaviour
     public GameObject addSphere(Texture2D texture, string nom, Color color)
     {
         GameObject newSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        newSphere.name = nom + " " + nextColorNum;
+        newSphere.name = nom;
         Renderer rend = newSphere.GetComponent<Renderer>();
         Material tmpMaterial = new Material(rend.sharedMaterial);
         tmpMaterial.shader = _shader;
@@ -105,5 +108,35 @@ public class SpheresManager : MonoBehaviour
     private float getColorRate(int num) {
         float phi = (1 + Mathf.Sqrt(5))/2;
         return num * phi - Mathf.Floor(num * phi);
+    }
+
+    public string[] getPlotsNamesArray()
+    {
+        string[] plotsNames = new string[_togglePanel.transform.childCount];
+        for (int i=0; i<_togglePanel.transform.childCount; i++) {
+            plotsNames[i] = _togglePanel.transform.GetChild(i).gameObject.GetComponent<SphereToggle>().getSphereName();
+        }
+        return plotsNames;
+    }
+
+    public int getPlotsCount()
+    {
+        return _togglePanel.transform.childCount;
+    }
+
+    public void deletePlot(int index)
+    {
+        _togglePanel.transform.GetChild(index).gameObject.GetComponent<SphereToggle>().destroySphere();
+        plotNum--;
+    }
+
+    public void changeColorPlot(int index, Color color)
+    {
+        _togglePanel.transform.GetChild(index).gameObject.GetComponent<SphereToggle>().applyColor(color);
+    }
+
+    public void changeNamePlot(int index, string newName)
+    {
+        _togglePanel.transform.GetChild(index).gameObject.GetComponent<SphereToggle>().modifyName(newName);            
     }
 }
