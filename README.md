@@ -8,7 +8,7 @@ control solutions. It offers a premade Unity scene with custom editor inspector:
 
 1. Open new project
 
-Open Unity Hub and click on "New project" and choose "3D (Built-in Render Pipeline)" template, then click on "Create project".
+Open Unity Hub and click on "New project" and choose "3D (Built-in Render Pipeline)" template, choose fitting name for your project and click on "Create project".
 
 ![New project selection window](doc/img/new_project.png)
 
