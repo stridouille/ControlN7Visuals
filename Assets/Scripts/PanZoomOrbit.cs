@@ -76,6 +76,8 @@ public class PanZoomOrbitCenter : MonoBehaviour
         float camDistanceToBoundCenter = boundDiagonal / 2 / (Mathf.Tan(Camera.main.fieldOfView / 2 * Mathf.Deg2Rad));
         float camDistanceToBoundWithOffset = camDistanceToBoundCenter + boundDiagonal / 2.0f - (Camera.main.transform.position - transform.position).magnitude;
         Camera.main.transform.position = bound.center - transform.forward * camDistanceToBoundWithOffset;
+        camDistanceToBoundWithOffset = camDistanceToBoundCenter + boundDiagonal / 2.0f - (Camera.main.transform.position - transform.position).magnitude;
+        Camera.main.transform.position = bound.center - transform.forward * camDistanceToBoundWithOffset;
     }
 
     void Zoom(float zoomDiff)

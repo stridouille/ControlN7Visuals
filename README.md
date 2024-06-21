@@ -40,7 +40,7 @@ On the right side of the panel, the custom inspector opens.
 
 You can then click on "Add plots" to select the plots you want to visualize on the sphere. If you click on "Add plot series", you'll be able to choose graphs that will be played in order, every few frames, as an animation.
 \
-The plot is then added as a child of PlotSphere and you can edit its name and color or delete it.
+The plot is then added as a child of PlotSphere and you can edit its name and color or delete it from the inspector.
 
 ![Added plots window state](doc/img/added_plot_window_state.png)
 
@@ -51,8 +51,4 @@ Please prefer using the delete button in the inspector rather than deleting it f
 
 + Scene background color: in the hierarchy panel, select FocalPoint/MainCamera ; in the inspector, select the wanted color in the camera component "Background" color field.
 + Default hidden lines transparency rate: in the hierarchy panel, select Canvas/PanelUpperMenu/SliderAlphaBack ; in the inspector, write the wanted value in the slider component "Value" field.
-+ Animation speed: in the PlotSphere custom inspector, choose the delta time between each frame (note that it only     ffects plot added afterwards).
-
-## Build the application
-
-## Integrate in web application
++ Animation speed: in the PlotSphere custom inspector, choose the delta time between each frame (note that it only     affects plot added afterwards).
