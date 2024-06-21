@@ -23,21 +23,17 @@ public class PanZoomOrbitCenter : MonoBehaviour
     void Update()
     {
         // Check for Orbit, Pan, Fit, Zoom
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject()) //Check for orbit
+        if (Input.GetKey(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject()) //Check for orbit
         {
             CamOrbit();
         }
-        if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.LeftControl) && !EventSystem.current.IsPointerOverGameObject()) //Check for Pan
+        if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject()) //Check for Pan
         {
             mouseWorldPosStart = GetPerspectivePos();
         }
-        if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.LeftControl) && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButton(1) && !EventSystem.current.IsPointerOverGameObject())
         {
             Pan();
-        }
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.F))
-        {
-            FitToScreen();
         }
         Zoom(Input.GetAxis("Mouse ScrollWheel"));
     }
