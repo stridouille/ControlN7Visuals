@@ -10,7 +10,6 @@ control solutions. It offers a premade Unity scene with custom editor inspector:
 
 Open Unity Hub and click on "New project" and choose "3D (Built-in Render Pipeline)" template, choose fitting name for your project and click on "Create project".
 
-![New project selection window](doc/img/new_project.png)
 
 2. Copy repository's folders
 
@@ -33,6 +32,29 @@ To plot the graphs needed for your visualization, prefer using the parameters gi
 
 ## Edit the scene
 
+### Add and edit plots
+
+When in editor mode, you can add and edit plots by opening the PlotSphere's custom inspector. To do so, select the parent GameObject PlotSphere by clicking on it in the hierarchy panel (by default on the left side of the screen).
+
+![PlotSphere selected](doc/img/hierarchy_plotsphere.png)
+
+On the right side of the panel, the custom inspector opens.
+
+![PlotSPhere custom inspector](doc/img/inspector_plotsphere.png)
+
+You can then click on "Add plots" to select the plots you want to visualize on the sphere. If you click on "Add plot series", you'll be able to choose graphs that will be played in order, every few frames, as an animation.
+\
+The plot is then added as a child of PlotSphere and you can edit its name and color or delete it.
+
+![Added plots window state](doc/img/added_plot_window_state.png)
+
+Please prefer using the delete button in the inspector rather than deleting it from the hierarchy panel as it may result in errors. If you need to delete from the the hierarchy panel, make sure you also delete the toggle associated to it that's been added to Canvas/Legend/PanelToggles children. This remark applies to the other possible modifications aswell.
+
+
+### Other modifiable parameters
+
 ## Build the application
 
 ## Integrate in web application
+
+## Troubleshooting
