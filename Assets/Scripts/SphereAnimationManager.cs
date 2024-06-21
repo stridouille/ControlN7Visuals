@@ -9,6 +9,7 @@ public class SphereAnimationManager : MonoBehaviour
     private bool isPlaying;
     private float previousTime;
     public List<Texture2D> textures;
+    public float animationTimeDelta;
     private int currentTextureIndex = 0;
 
     // Start is called before the first frame update
@@ -25,7 +26,7 @@ public class SphereAnimationManager : MonoBehaviour
         if (isPlaying)
         {
             float currentTime = Time.time;
-            if (currentTime - previousTime > 0.5)
+            if (currentTime - previousTime > animationTimeDelta)
             {
                 previousTime = currentTime;
                 // Switch to the next texture

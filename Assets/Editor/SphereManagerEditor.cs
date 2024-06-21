@@ -13,7 +13,7 @@ public class SpheresManagerEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        GUILayout.Label("Manager's variables (do not modify)", EditorStyles.boldLabel);
+        GUILayout.Label("Manager's variables", EditorStyles.boldLabel);
         DrawDefaultInspector();
         SpheresManager manager = (SpheresManager) target;
 

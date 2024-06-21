@@ -36,11 +36,7 @@ To plot the graphs needed for your visualization, prefer using the parameters gi
 
 When in editor mode, you can add and edit plots by opening the PlotSphere's custom inspector. To do so, select the parent GameObject PlotSphere by clicking on it in the hierarchy panel (by default on the left side of the screen).
 
-![PlotSphere selected](doc/img/hierarchy_plotsphere.png)
-
 On the right side of the panel, the custom inspector opens.
-
-![PlotSPhere custom inspector](doc/img/inspector_plotsphere.png)
 
 You can then click on "Add plots" to select the plots you want to visualize on the sphere. If you click on "Add plot series", you'll be able to choose graphs that will be played in order, every few frames, as an animation.
 \
@@ -53,8 +49,10 @@ Please prefer using the delete button in the inspector rather than deleting it f
 
 ### Other modifiable parameters
 
++ Scene background color: in the hierarchy panel, select FocalPoint/MainCamera ; in the inspector, select the wanted color in the camera component "Background" color field.
++ Default hidden lines transparency rate: in the hierarchy panel, select Canvas/PanelUpperMenu/SliderAlphaBack ; in the inspector, write the wanted value in the slider component "Value" field.
++ Animation speed: in the PlotSphere custom inspector, choose the delta time between each frame (note that it only     ffects plot added afterwards).
+
 ## Build the application
 
 ## Integrate in web application
-
-## Troubleshooting
