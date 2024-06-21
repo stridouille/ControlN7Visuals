@@ -27,6 +27,10 @@ Make sure the editor's selected build platform is "PC". To do so, go in File - B
 
 ## Plot graphs
 
+To plot the graphs needed for your visualization, prefer using the parameters given by the file julia_template.jl found in root of the repository. For the mapping on the sphere to work, the graphs have to be PNG files with 2:1 ratio and transparent background, with no borders. See example below.
+
+![Plot example](doc/img/plot_example.png)
+
 ## Edit the scene
 
 ## Build the application
