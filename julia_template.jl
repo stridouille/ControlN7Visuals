@@ -17,7 +17,7 @@ plot(x, 0, 2*pi, linecolor=:red)
 plot!(dpi = 1000, framestyle=:none, fmt=:png, background=false, legend=false, grid=false, axis=false, border=false, size=(1000,500), margin=0mm)
 
 #save the plot in desired path
-img_path = "Assets/Images/output.png"
+img_path = "doc/img/output.png"
 savefig(img_path)
 
 #these lines crop the image's margins
