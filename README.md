@@ -58,7 +58,7 @@ Please prefer using the delete button in the inspector rather than deleting it f
 
 ![Runtime state window](doc/img/runtime_state.png)
 
-When running the application, the user can interact with the scene you've created. He can:
+When running the application, the user can interact with the scene you've created. They can:
 
 + Orbit around the sphere (left click + drag), pan (right click + drag) and zoom (moousewheel).
 
@@ -73,3 +73,5 @@ When running the application, the user can interact with the scene you've create
 + Hide/Show a specific graph by clicking on the toggle button next to the caption of the desired graph.
 
 + Hide/Show the legend.
+
++ Play (automatically or manually) any graph's animation with the buttons next to its caption.
