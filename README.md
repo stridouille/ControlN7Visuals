@@ -1,7 +1,7 @@
 # Description
 
 ControlN7Visuals is a Unity project specifically developed for the sake of 3D-visualizing optimal
-control solutions. It offers a premade Unity scene with custom editor inspector: the user selects PNG solution graphs from the Unity editor and they automatically get added onto a sphere. The project can then be built in order to get a visual demonstration web module, for example.
+control solutions. It offers a premade Unity scene with custom editor inspector: the user selects solution graphs from the Unity editor and they automatically get added onto a sphere. The project can then be built in order to get a visual demonstration web module, for example.
 
 
 # Setting up
@@ -18,7 +18,7 @@ Copy files from folders "Assets", "Packages" and "ProjectSettings" from this rep
 
 3. Choose compatible build platform
 
-Make sure the editor's selected build platform is "PC". To do so, go in File - Build Settings - Platform: "Windows, Mac Linux" should be selected. If not, select it and click "Switch Platform". If the editor's build platform is anything else, you won't be able to import several files at the same time and other editing features might be affected. Of course, after having finished editing, you can choose whatever platform you prefer to build the application.
+Make sure the editor's selected build platform is "PC". To do so, go in File - Build Settings - Platform: "Windows, Mac Linux" should be selected. If not, select it and click on "Switch Platform". If the editor's build platform is anything else, you won't be able to import several files at the same time and other editing features might be affected. Of course, after having finished editing, you can choose whatever platform you prefer to build the application.
 
 
 
@@ -26,7 +26,7 @@ Make sure the editor's selected build platform is "PC". To do so, go in File - B
 
 ## Plot graphs
 
-To plot the graphs needed for your visualization, prefer using the parameters given by the file julia_template.jl found in root of the repository. For the mapping on the sphere to work, the graphs have to be PNG files with 2:1 ratio and transparent background, with no borders. See example below.
+To plot the graphs needed for your visualization, prefer using the parameters given by the file julia_template.jl found in root of the repository. For the mapping onto the sphere to work, the graphs have to be PNG files with 2:1 ratio and transparent background, with no borders. See example below.
 
 ![Plot example](doc/img/plot_example.png)
 
@@ -49,6 +49,27 @@ Please prefer using the delete button in the inspector rather than deleting it f
 
 ### Other modifiable parameters
 
-+ Scene background color: in the hierarchy panel, select FocalPoint/MainCamera ; in the inspector, select the wanted color in the camera component "Background" color field.
-+ Default hidden lines transparency rate: in the hierarchy panel, select Canvas/PanelUpperMenu/SliderAlphaBack ; in the inspector, write the wanted value in the slider component "Value" field.
++ Scene background color: in the hierarchy panel, select FocalPoint/MainCamera ; in the inspector, select the desired color in the camera component "Background" color field.
++ Default hidden lines transparency rate: in the hierarchy panel, select Canvas/PanelUpperMenu/SliderAlphaBack ; in the inspector, write the desired value in the slider component "Value" field.
 + Animation speed: in the PlotSphere custom inspector, choose the delta time between each frame (note that it only     affects plot added afterwards).
+
+
+## Runtime state
+
+![Runtime state window](doc/img/runtime_state.png)
+
+When running the application, the user can interact with the scene you've created. He can:
+
++ Orbit around the sphere (left click + drag), pan (right click + drag) and zoom (moousewheel).
+
++ Reset the camera.
+
++ Change the level of the hidden lines' transparency.
+
++ Change the color of a graph by selecting a color in the colorpicker and then clicking on the colored square next to the caption of the desired graph.
+
++ Change the caption by clicking on it and writing the new name.
+
++ Hide/Show a specific graph by clicking on the toggle button next to the caption of the desired graph.
+
++ Hide/Show the legend.
