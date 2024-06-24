@@ -3649,7 +3649,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6634,6 +6634,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shader: {fileID: 4800000, guid: b0a8ad8d069649c40af97ad07f98d5b7, type: 3}
   _togglePanel: {fileID: 1964841199}
+  _animationTimeDelta: 0
 --- !u!1 &1940317521
 GameObject:
   m_ObjectHideFlags: 0
