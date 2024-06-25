@@ -79,7 +79,7 @@ Shader "Custom/TransparentEquirectangular"
                     equiUV.x += _MainTex_ST.z;     
 
                     fixed4 col = tex2Dgrad(_MainTex, equiUV, dx, dy) * float4(1, 1, 1, IN.decreaseAlpha);
-                    col = (1, 1, 1, col.a) * _Color;
+                    col = float4(1, 1, 1, col.a) * _Color;
                     return col;
                 }
 

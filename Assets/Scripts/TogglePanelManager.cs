@@ -4,14 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
-using UnityEditor.Events;
 
 public class TogglePanelManager : MonoBehaviour
 {
     [SerializeField] private GameObject togglePrefab;
     [SerializeField] private GameObject toggleSeriesPrefab;
-    [SerializeField] private GameObject gridColorPicker;
-    [SerializeField] private GameObject colorPicker;
+    public GameObject colorPicker;
 
 
     // Add a toggle for a new sphere
@@ -25,15 +23,12 @@ public class TogglePanelManager : MonoBehaviour
         newToggle.GetComponentInChildren<TMP_InputField>().text = newSphere.name;
         newToggle.name = "Toggle " + newSphere.name;
 
-        //add toggle listeners
+        // Instantiate toggle script
         toggleScript = isSeries ? newToggle.AddComponent<SeriesSphereToggle>() : newToggle.AddComponent<SimpleSphereToggle>();
-        toggleScript.InstantiateSphereToggle(newSphere, newColor);
-        toggleScript.addListeners();
+        toggleScript.InstantiateSphereToggle(newSphere, newColor, colorPicker);
 
-        //add color picker listener
+        // Color button image with the plot's color
         GameObject colorPickerButton = newToggle.transform.Find("ColorPicker").gameObject;        
-        newToggle.transform.Find("ColorPicker").gameObject.GetComponent<Image>().color = newColor;
-        UnityAction<GameObject> callback = new UnityAction<GameObject>(toggleScript.applyPickedColor);
-        UnityEventTools.AddObjectPersistentListener<GameObject>(colorPickerButton.GetComponent<Button>().onClick, callback, colorPicker);
+        colorPickerButton.GetComponent<Image>().color = newColor;
     }
 }

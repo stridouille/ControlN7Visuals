@@ -6964,7 +6964,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   togglePrefab: {fileID: 4595700566311053126, guid: 6e691edb074740042bb5f9d6e085d89b, type: 3}
   toggleSeriesPrefab: {fileID: 319256713531303596, guid: b64601bf02a52b84d995c27111450ec0, type: 3}
-  gridColorPicker: {fileID: 0}
   colorPicker: {fileID: 347667991}
 --- !u!1 &1971901251
 GameObject:

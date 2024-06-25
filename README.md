@@ -53,6 +53,10 @@ Please prefer using the delete button in the inspector rather than deleting it f
 + Default hidden lines transparency rate: in the hierarchy panel, select Canvas/PanelUpperMenu/SliderAlphaBack ; in the inspector, write the desired value in the slider component "Value" field.
 + Animation speed: in the PlotSphere custom inspector, choose the delta time between each frame (note that it only     affects plot added afterwards).
 
+### IMPORTANT
+
+When done with editing the scene, don't forget to save it by clicking on the three dots next to its name in the hierarchy panel and then select "Save scene". It is important to note that simply pressing Ctrl+S doesn't save the scene.
+
 
 ## Runtime state
 

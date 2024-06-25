@@ -5,17 +5,17 @@ using UnityEngine.UI;
 public abstract class SphereToggle : MonoBehaviour
 {
     [SerializeField] protected GameObject sphere;
+    public GameObject colorPicker;
     protected Color color;
 
-    public void InstantiateSphereToggle(GameObject sphere, Color color) {
+    public void InstantiateSphereToggle(GameObject sphere, Color color, GameObject colorPicker) {
         this.sphere = sphere;
         this.color = color;
+        this.colorPicker = colorPicker;
     }
     
-    public abstract void addListeners();
-
-    public void setActiveSphere() {
-        sphere.SetActive(gameObject.GetComponent<Toggle>().isOn);
+    public void setActiveSphere(bool isOn) {
+        sphere.SetActive(isOn);
     }
 
     public void applyColor(Color color) {
@@ -32,6 +32,7 @@ public abstract class SphereToggle : MonoBehaviour
     }
 
     public void applyPickedColor(GameObject colorPicker) {
+        if (colorPicker == null) Debug.Log("Color picker is null");
         applyColor(colorPicker.GetComponent<FlexibleColorPicker>().GetColor());
     }
 
