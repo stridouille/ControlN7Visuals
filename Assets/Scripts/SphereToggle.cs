@@ -1,17 +1,21 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public abstract class SphereToggle : MonoBehaviour
 {
     [SerializeField] protected GameObject sphere;
-    public GameObject colorPicker;
-    protected Color color;
+    [SerializeField] protected GameObject colorPicker;
+    [SerializeField] protected Color color;
+    [SerializeField] protected GameObject exitPickerPanel;
 
-    public void InstantiateSphereToggle(GameObject sphere, Color color, GameObject colorPicker) {
+    public void InstantiateSphereToggle(GameObject sphere, Color color, GameObject colorPicker, GameObject exitPickerPanel) {
         this.sphere = sphere;
         this.color = color;
         this.colorPicker = colorPicker;
+        this.exitPickerPanel = exitPickerPanel;
     }
     
     public void setActiveSphere(bool isOn) {
@@ -31,8 +35,16 @@ public abstract class SphereToggle : MonoBehaviour
         gameObject.transform.Find("ColorPicker").gameObject.GetComponent<Image>().color = color;
     }
 
+    public void chooseColor() {
+        colorPicker.SetActive(true);
+        exitPickerPanel.SetActive(true);
+        colorPicker.GetComponent<FlexibleColorPicker>().SetColor(color);
+        Button confirmButton = GameObject.Find("ConfirmColorButton").GetComponentInChildren<Button>();
+        confirmButton.onClick.RemoveAllListeners();
+        confirmButton.onClick.AddListener(() => applyPickedColor(colorPicker));
+    }
+
     public void applyPickedColor(GameObject colorPicker) {
-        if (colorPicker == null) Debug.Log("Color picker is null");
         applyColor(colorPicker.GetComponent<FlexibleColorPicker>().GetColor());
     }
 

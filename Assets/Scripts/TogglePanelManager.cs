@@ -9,8 +9,14 @@ public class TogglePanelManager : MonoBehaviour
 {
     [SerializeField] private GameObject togglePrefab;
     [SerializeField] private GameObject toggleSeriesPrefab;
-    public GameObject colorPicker;
+    [SerializeField] private GameObject colorPicker;
+    [SerializeField] private GameObject exitPickerPanel;
 
+
+    void Start() {
+        colorPicker.SetActive(false);
+        exitPickerPanel.SetActive(false);
+    }
 
     // Add a toggle for a new sphere
     public void addToggle(GameObject newSphere, Color newColor, bool isSeries) {
@@ -25,7 +31,7 @@ public class TogglePanelManager : MonoBehaviour
 
         // Instantiate toggle script
         toggleScript = isSeries ? newToggle.AddComponent<SeriesSphereToggle>() : newToggle.AddComponent<SimpleSphereToggle>();
-        toggleScript.InstantiateSphereToggle(newSphere, newColor, colorPicker);
+        toggleScript.InstantiateSphereToggle(newSphere, newColor, colorPicker, exitPickerPanel);
 
         // Color button image with the plot's color
         GameObject colorPickerButton = newToggle.transform.Find("ColorPicker").gameObject;        

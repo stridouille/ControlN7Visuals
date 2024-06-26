@@ -27,7 +27,7 @@ class SeriesSphereToggle : SphereToggle {
 
         // Add a listener to the color picker button
         GameObject colorPickerButton = gameObject.transform.Find("ColorPicker").gameObject;
-        colorPickerButton.GetComponent<Button>().onClick.AddListener(() => applyPickedColor(colorPicker));
+        colorPickerButton.GetComponent<Button>().onClick.AddListener(() => chooseColor());
     }
 
     private void PlayPause(GameObject playPauseButton) {
