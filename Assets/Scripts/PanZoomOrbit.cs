@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.EventSystems;
 
 public class PanZoomOrbitCenter : MonoBehaviour
@@ -12,6 +13,13 @@ public class PanZoomOrbitCenter : MonoBehaviour
     private float zoomMin = 0.5f;
     private float zoomMax = 100.0f;
     private float defaultFieldOfView = 60.0f;
+    private bool dragBegunOnSpheres = false;
+    Camera m_Camera;
+
+    void Awake()
+    {
+       m_Camera = Camera.main;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +30,29 @@ public class PanZoomOrbitCenter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Check for Orbit, Pan, Fit, Zoom
-        if (Input.GetKey(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject()) //Check for orbit
-        {
-            CamOrbit();
+
+        if (Input.GetMouseButtonDown(0)) {          //check for beginning of orbit
+            Vector3 mousePosition = Input.mousePosition;
+            Ray ray = m_Camera.ScreenPointToRay(mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if (hit.collider.gameObject == parentModel) {
+                    dragBegunOnSpheres = true;
+                }
+            }
         }
+
+        if (Input.GetMouseButton(0)) { //Check for orbit
+            if (dragBegunOnSpheres) {
+                CamOrbit();
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0)) {
+            // TODO: faire diminuer la vitesse et continuer camorbit pour donner sensation de mouvement
+            dragBegunOnSpheres = false;
+        }
+
         if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject()) //Check for Pan
         {
             mouseWorldPosStart = GetPerspectivePos();
@@ -39,7 +65,7 @@ public class PanZoomOrbitCenter : MonoBehaviour
     }
 
 
-    private void CamOrbit()
+    public void CamOrbit()
     {
         if (Input.GetAxis("Mouse Y") != 0 || Input.GetAxis("Mouse X") != 0)
         {
@@ -85,15 +111,15 @@ public class PanZoomOrbitCenter : MonoBehaviour
         if (zoomDiff != 0)
         {
             mouseWorldPosStart = GetPerspectivePos();
-            Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView - zoomDiff * zoomScale, zoomMin, zoomMax);
+            m_Camera.fieldOfView = Mathf.Clamp(m_Camera.fieldOfView - zoomDiff * zoomScale, zoomMin, zoomMax);
             Vector3 mouseWorldPosDiff = mouseWorldPosStart - GetPerspectivePos();
-            Camera.main.transform.position += mouseWorldPosDiff;
+            m_Camera.transform.position += mouseWorldPosDiff;
         }
     }
 
     public Vector3 GetPerspectivePos()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
         Plane plane = new Plane(transform.forward, 0.0f);
         float distance;
         plane.Raycast(ray, out distance);
