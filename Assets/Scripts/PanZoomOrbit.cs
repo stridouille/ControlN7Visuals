@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -61,7 +62,7 @@ public class PanZoomOrbitCenter : MonoBehaviour
         {
             Pan();
         }
-        Zoom(Input.GetAxis("Mouse ScrollWheel"));
+        Zoom1(Input.GetAxis("Mouse ScrollWheel"));
     }
 
 
@@ -81,7 +82,7 @@ public class PanZoomOrbitCenter : MonoBehaviour
         if (Input.GetAxis("Mouse Y") != 0 || Input.GetAxis("Mouse X") != 0)
         {
             Vector3 mouseWorldPosDiff = mouseWorldPosStart - GetPerspectivePos();
-            Camera.main.transform.position += mouseWorldPosDiff;
+            m_Camera.transform.position += mouseWorldPosDiff;
         }
     }
 
@@ -95,25 +96,64 @@ public class PanZoomOrbitCenter : MonoBehaviour
     }
 
     public void FitToScreen() {
-        Camera.main.fieldOfView = defaultFieldOfView;
+        m_Camera.fieldOfView = defaultFieldOfView;
         Bounds bound = GetBound(parentModel);
         Vector3 boundSize = bound.size;
         float boundDiagonal = Mathf.Sqrt(Mathf.Pow(boundSize.x, 2) + Mathf.Pow(boundSize.y, 2) + Mathf.Pow(boundSize.z, 2));
-        float camDistanceToBoundCenter = boundDiagonal / 2 / (Mathf.Tan(Camera.main.fieldOfView / 2 * Mathf.Deg2Rad));
-        float camDistanceToBoundWithOffset = camDistanceToBoundCenter + boundDiagonal / 2.0f - (Camera.main.transform.position - transform.position).magnitude;
-        Camera.main.transform.position = bound.center - transform.forward * camDistanceToBoundWithOffset;
-        camDistanceToBoundWithOffset = camDistanceToBoundCenter + boundDiagonal / 2.0f - (Camera.main.transform.position - transform.position).magnitude;
-        Camera.main.transform.position = bound.center - transform.forward * camDistanceToBoundWithOffset;
+        float camDistanceToBoundCenter = boundDiagonal / 2 / (Mathf.Tan(m_Camera.fieldOfView / 2 * Mathf.Deg2Rad));
+        float camDistanceToBoundWithOffset = camDistanceToBoundCenter + boundDiagonal / 2.0f - (m_Camera.transform.position - transform.position).magnitude;
+        m_Camera.transform.position = bound.center - transform.forward * camDistanceToBoundWithOffset;
+        camDistanceToBoundWithOffset = camDistanceToBoundCenter + boundDiagonal / 2.0f - (m_Camera.transform.position - transform.position).magnitude;
+        m_Camera.transform.position = bound.center - transform.forward * camDistanceToBoundWithOffset;
     }
 
-    void Zoom(float zoomDiff)
+    //Zoom with linear difference between mouse position on plane containing the sphere's center before and after 
+    //fieldofview change as camera adjustment
+    void Zoom1(float zoomDiff)
     {
         if (zoomDiff != 0)
         {
             mouseWorldPosStart = GetPerspectivePos();
-            m_Camera.fieldOfView = Mathf.Clamp(m_Camera.fieldOfView - zoomDiff * zoomScale, zoomMin, zoomMax);
+            Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView - zoomDiff * zoomScale, zoomMin, zoomMax);
             Vector3 mouseWorldPosDiff = mouseWorldPosStart - GetPerspectivePos();
-            m_Camera.transform.position += mouseWorldPosDiff;
+            Camera.main.transform.position += mouseWorldPosDiff;
+        }
+    }
+
+    //Zoom with linear difference between mouse position the sphere center before and after 
+    //fieldofview change as camera adjustment (for now doesn't work when zooming while pointing outside the sphere)
+    void Zoom2(float zoomDiff)
+    {
+        if (zoomDiff != 0)
+        {
+            // Calculate the mouse position in world space before zoom
+            Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                Vector3 mouseWorldPosBefore = hit.point;
+
+                // Adjust the field of view
+                Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView - zoomDiff * zoomScale, zoomMin, zoomMax);
+
+                // Calculate the mouse position in world space after zoom
+                ray = m_Camera.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit))
+                {
+                    Vector3 mouseWorldPosAfter = hit.point;
+
+                    // Calculate the difference and adjust the camera position
+                    Vector3 mouseWorldPosDiff = mouseWorldPosBefore - mouseWorldPosAfter;
+                    Camera.main.transform.position += mouseWorldPosDiff;
+                }
+                else
+                {
+                    Debug.LogWarning("No hit detected after adjusting field of view during zoom.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No hit detected before adjusting field of view during zoom.");
+            }
         }
     }
 
@@ -124,6 +164,12 @@ public class PanZoomOrbitCenter : MonoBehaviour
         float distance;
         plane.Raycast(ray, out distance);
         return ray.GetPoint(distance);
+    }
+
+    // Use this for rotation adjustment ?
+    private void DiffSpherical(Vector3 cartCoordsA, Vector3 cartCoordsB, out float diffPolar, out float diffElevation){
+        diffPolar = Mathf.Acos(cartCoordsA.x*cartCoordsB.x + cartCoordsA.y*cartCoordsB.y);
+        diffElevation = Mathf.Acos(cartCoordsA.x*cartCoordsB.x + cartCoordsA.z*cartCoordsB.z);
     }
 
 }
