@@ -144,6 +144,7 @@ public class PanZoomOrbitCenter : MonoBehaviour
                     // Calculate the difference and adjust the camera position
                     Vector3 mouseWorldPosDiff = mouseWorldPosBefore - mouseWorldPosAfter;
                     Camera.main.transform.position += mouseWorldPosDiff;
+                    //or rotate this.transform by diffspherical?
                 }
                 else
                 {
