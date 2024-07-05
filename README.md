@@ -52,6 +52,7 @@ Please prefer using the delete button in the inspector rather than deleting it f
 + Scene background color: in the hierarchy panel, select FocalPoint/MainCamera ; in the inspector, select the desired color in the camera component "Background" color field.
 + Default hidden lines transparency rate: in the hierarchy panel, select Canvas/PanelUpperMenu/SliderAlphaBack ; in the inspector, write the desired value in the slider component "Value" field.
 + Animation speed: in the PlotSphere custom inspector, choose the delta time between each frame (note that it only     affects plot added afterwards).
++ Camera's rotation speed: in the FocalPoint custom inspector, choose the desired speed.
 
 ### IMPORTANT
 
@@ -64,7 +65,7 @@ When done with editing the scene, don't forget to save it by clicking on the thr
 
 When running the application, the user can interact with the scene you've created. They can:
 
-+ Orbit around the sphere (left click + drag), pan (right click + drag) and zoom (moousewheel).
++ Orbit around the sphere (left click + drag) and zoom (moousewheel).
 
 + Reset the camera.
 

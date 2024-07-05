@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class PanZoomOrbitCenter : MonoBehaviour
 {
     [SerializeField] private GameObject parentModel;
-    private float rotationSpeed = 500.0f;
+    [SerializeField, Range(100f, 700f)] float rotationSpeed = 500.0f;
     private Vector3 mouseWorldPosStart;
     private float zoomScale = 10f;
     private float zoomMin = 0.5f;
