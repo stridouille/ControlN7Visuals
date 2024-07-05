@@ -3720,8 +3720,8 @@ Camera:
   near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 1
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -6949,7 +6949,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1934068866}
-  - component: {fileID: 1934068868}
   - component: {fileID: 1934068867}
   m_Layer: 0
   m_Name: PlotSpheres
@@ -6987,28 +6986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shader: {fileID: 4800000, guid: b0a8ad8d069649c40af97ad07f98d5b7, type: 3}
   _togglePanel: {fileID: 1964841199}
-  _animationTimeDelta: 0
---- !u!135 &1934068868
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1934068865}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.6
-  m_Center: {x: 0, y: 0, z: 0}
+  _animationTimeDelta: 0.36
 --- !u!1 &1940317521
 GameObject:
   m_ObjectHideFlags: 0

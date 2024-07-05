@@ -10,7 +10,7 @@ public class SpheresManager : MonoBehaviour
 {
     [SerializeField] private Shader _shader;
     [SerializeField] private GameObject _togglePanel;
-    [SerializeField, Range(0.1f, 5)] private float _animationTimeDelta;
+    [SerializeField, Range(0.1f, 5) ] private float _animationTimeDelta;
     private int plotNum = 1;
 
 
