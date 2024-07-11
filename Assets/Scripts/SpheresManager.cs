@@ -10,7 +10,7 @@ public class SpheresManager : MonoBehaviour
 {
     [SerializeField] private Shader _shader;
     [SerializeField] private GameObject _togglePanel;
-    [SerializeField, Range(0.1f, 5) ] private float _animationTimeDelta;
+    [SerializeField, Range(0.1f, 5)] private float animationTimeDelta = 0.2f;
     private int plotNum = 1;
 
 
@@ -79,7 +79,7 @@ public class SpheresManager : MonoBehaviour
                 GameObject newSphere = addSphere(textures.First(), name, newColor);
                 SphereAnimationManager animationManager = newSphere.AddComponent<SphereAnimationManager>();
                 animationManager.textures = textures;
-                animationManager.animationTimeDelta = _animationTimeDelta;
+                animationManager.animationTimeDelta = animationTimeDelta;
                 _togglePanel.GetComponent<TogglePanelManager>().addToggle(newSphere, newColor, true);
             }
         }
